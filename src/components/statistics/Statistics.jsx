@@ -1,15 +1,13 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Statistics.module.css';
 
-class Statistics extends Component {
-    render() {
+function Statistics (props) {
     const { 
       options, 
       stats, 
       total, 
       positiveRate, 
-    } = this.props;
+    } = props;
     return (
       <div className={styles.block}>
         {!!total && (
@@ -32,14 +30,13 @@ class Statistics extends Component {
         {!total && <p className={styles.feedbackTitle}>No feedback given</p>}
       </div>
     );
-  }
 }
 
 Statistics.propTypes = {
   options: PropTypes.array.isRequired,
   stats: PropTypes.object.isRequired,
   total: PropTypes.number.isRequired,
-  positiveRate: PropTypes.number.isRequired,
+  positiveRate: PropTypes.string.isRequired,
 };
 
 export default Statistics;

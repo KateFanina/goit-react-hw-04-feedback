@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import FeedbackOptions from './feedbackOptions/FeedbackOptions';
 import Section from './section/Section';
 import Statistics from './statistics/Statistics';
@@ -9,30 +9,23 @@ import {
   feetbackTypes,
 } from '../constants/feedbackTypes';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      stats: {
-        [GOOD]: 0,
-        [NEUTRAL]: 0,
-        [BAD]: 0,
-      },
-    };
-  }
+function App () {
+  const [stats, setStats] = useState({
+    [GOOD]: 0,
+    [NEUTRAL]: 0,
+    [BAD]: 0,
+  });
   
-  countTotalFeedback = () => {
-    const { stats } = this.state;
-    return Object.values(stats).reduce((acc, a) => acc + a, 0);
+  const countTotalFeedback = () => {
+    const newStats = {...stats}
+    return Object.values(newStats).reduce((acc, value) => acc + value, 0);
   }
 
-  countPositiveFeedbackPercentage = () => {
-    const { stats } = this.state;
-    return (stats[GOOD]/ this.countTotalFeedback()*100).toFixed(0);
+  const countPositiveFeedbackPercentage = () => {
+    const newStats = {...stats}
+    return (newStats[GOOD]/ countTotalFeedback()*100).toFixed(0);
   }
 
-  render() {
-    const { stats } = this.state;
     return (
       <div
         style={{
@@ -48,11 +41,9 @@ class App extends Component {
           <FeedbackOptions
             options={feetbackTypes}
             onIncrementStat={statName => {
-              this.setState(prevState => ({
-                stats: {
-                  ...stats,
-                  [statName]: prevState.stats[statName] + 1,
-                },
+              setStats(prevState => ({
+                ...prevState,
+                [statName]: prevState[statName] + 1,
               }));
             }}
           />
@@ -61,12 +52,11 @@ class App extends Component {
           <Statistics 
           stats={stats} 
           options={feetbackTypes} 
-          total={this.countTotalFeedback()} 
-          positiveRate={this.countPositiveFeedbackPercentage()}/>
+          total={countTotalFeedback()} 
+          positiveRate={countPositiveFeedbackPercentage()}/>
         </Section>
       </div>
     );
-  }
-}
+  };
 
 export default App;
