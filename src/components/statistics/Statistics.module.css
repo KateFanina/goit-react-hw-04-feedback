@@ -1,0 +1,25 @@
+.list {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+}
+
+.item {
+  font-size: 20px;
+  margin-bottom: 16px;
+  margin-top: 0;
+  text-transform: capitalize;
+}
+
+.feedbackTitle {
+  font-size: 30px;
+  margin: 0;
+}
+
+.block {
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+}
